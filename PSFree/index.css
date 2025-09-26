@@ -7,8 +7,6 @@ html, body {
         135deg,
         #0d0d0d,
         #2e004f,
-        #ff4d4d,   /* أحمر فاتح */
-        #8b0000,   /* أحمر غامق */
         #003791
     );
     background-size: 400% 400%;
@@ -202,15 +200,24 @@ body {
 }
 
 h1 {
-    color: rgb(172, 134, 32);
+    color: rgb(190, 165, 45);  /* دهبي أفتح */
     display: flex;
     align-items: center;
     justify-content: center;
+    gap: 10px;
     position: absolute;
     top: 10%;
     left: 5px;
     right: 5px;
+    font-size: 50px;
+    font-family: Arial, sans-serif;
+    font-weight: bold;
+    text-shadow: 
+        0 0 5px #ffdb70, 
+        0 0 10px #b8860b;
 }
+
+
 
 h4 {
     color: var(--accent);

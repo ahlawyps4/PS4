@@ -3,8 +3,25 @@ html, body {
     margin: 0;
     padding: 0;
     overflow: hidden;
-    background: url('img.jpg');
+    background: linear-gradient(
+        135deg,
+        #0d0d0d,
+        #2e004f,
+        #ff4d4d,   /* أحمر فاتح */
+        #8b0000,   /* أحمر غامق */
+        #003791
+    );
+    background-size: 400% 400%;
+    animation: galaxyMove 15s ease infinite;
 }
+
+@keyframes galaxyMove {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+
 body {
     min-height: 100vh;
     min-width: 100vw;

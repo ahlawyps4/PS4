@@ -200,7 +200,7 @@ body {
 }
 
 h1 {
-    color: rgb(190, 165, 45);  /* دهبي أفتح */
+    color: #cce6ff;  /* أزرق سماوي فاتح يبان مع الخلفية */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -209,13 +209,21 @@ h1 {
     top: 10%;
     left: 5px;
     right: 5px;
-    font-size: 45px;
+    font-size: 32px;
     font-family: Arial, sans-serif;
     font-weight: bold;
     text-shadow: 
-        0 0 5px #ffdb70, 
-        0 0 10px #b8860b;
+        0 0 5px #66a3ff, 
+        0 0 10px #003791;
 }
+
+/* الرقم بلون مختلف */
+.phone {
+    color: #00ff99;  /* أخضر نيون */
+    text-shadow: 0 0 5px #00ffaa, 0 0 10px #00cc88;
+}
+
+
 
 
 

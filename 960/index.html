@@ -97,6 +97,30 @@
         font-size: 14px;
         color: #888;
       }
+.btnRow{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap: 14px;
+  margin-top: 24px;
+}
+
+#reloadBtn{
+  width: 60px;
+  height: 60px;
+  font-size: 28px;
+  font-weight: 800;
+  background: linear-gradient(180deg, #666 0%, #444 100%);
+  color: #fff;
+  border: 1px solid #777;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 10px 22px rgba(0,0,0,0.35);
+}
+
+#reloadBtn:hover{
+  filter: brightness(1.1);
+}
     </style>
     <script>
   // روح لصفحة الكاش فقط لو مفيش كاش متثبت (UNCACHED = 0)
@@ -107,18 +131,19 @@
   </head>
   <body>
 <h2 id="mainTitle"> ALAWEY-PS4 HOST 7.00 - 9.60 </h2>
-<div>
-  <button id="jailbreakBtn" >Start GoldHen</button>
-
-  <label style="display:block; margin-top:12px; font-size:20px; color:#cccccc;">
-    <input type="checkbox" id="autoStartChk">
-    تشغيل تلقائي بعد فتح الصفحة
-  </label>
+<h3 id="hostTitle">THIS HOST FROM ALAWEY-PS4</h3>
+<h2 id="thanksTitle"><strong> 01018251103</strong></h2>
+<div class="btnRow">
+  <button id="jailbreakBtn">Start GoldHen</button>
+  <button id="reloadBtn" title="تحديث الصفحة">🔄</button>
 </div>
+
+<label style="display:block; margin-top:12px; font-size:20px; color:#cccccc;">
+  <input type="checkbox" id="autoStartChk">
+  تشغيل تلقائي بعد فتح الصفحة
+</label>
     <pre id="console"></pre>
   <footer>
-  <h1 id="hostTitle">THIS HOST FROM ALAWEY-PS4</h1>
- <h2 id="thanksTitle"><strong> 01018251103</strong></h2>
  </footer>
  
   <script>
@@ -173,6 +198,10 @@ window.addEventListener("DOMContentLoaded", () => {
   if (localStorage.getItem(AUTO_KEY) === "1") {
     document.getElementById("jailbreakBtn").click();
   }
+
+  document.getElementById("reloadBtn").addEventListener("click", () => {
+    location.reload();
+  });
 });
   </script>
     </body>

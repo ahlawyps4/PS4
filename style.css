@@ -1,102 +1,173 @@
-html {
-    background-image: url('img.jpg');
-    background-position: center;
-    background-size: cover;
-    background-attachment: fixed;
-    background-repeat: no-repeat;
-    background-color: #24272b;
+/* ============ AHLAWY STORE FINAL RECOVERY - v13.0 ============ */
+:root {
+  --main-red: #ff0000;
+  --dark-bg: #0a0707;
+  --text-white: #ffffff;
+  --gold: #d4af37;
+}
+
+body {
+  margin: 0; padding: 0;
+  background: radial-gradient(circle at top, #4b0000 0%, #0a0707 80%) no-repeat fixed;
+  color: var(--text-white); direction: rtl;
+  font-family: sans-serif;
+  overflow-x: hidden;
+}
+
+/* --- تحسين الهيدر --- */
+.store-header {
+    background: rgba(0, 0, 0, 0.95); 
+    padding: 0 15px;
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center;
+    border-bottom: 2px solid var(--main-red); 
+    height: 70px;
+    position: sticky; 
+    top: 0; 
+    z-index: 2000;
+}
+
+.header-search input {
+    width: 250px;
+    padding: 8px;
+    border-radius: 15px;
+    border: 1px solid #444;
+    background-color: #111;
     color: white;
-    text-align: center;
+    font-size: 14px;
+}
+
+.cart-trigger {
+    background-color: var(--main-red);
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    color: white;
+    font-weight: bold;
+}
+
+/* --- تحسين عرض الألعاب --- */
+.games {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 15px;
+    padding: 20px;
+}
+
+@media (max-width: 900px) {
+    .games {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 600px) {
+    .games {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* --- تحسين عرض كل لعبة --- */
+.game-item {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
     overflow: hidden;
+    text-align: center;
+    height: 250px;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s ease;
 }
 
-h1 {
-    text-shadow: 0.1em 0.1em 0.2em black;
-    font-size: 25px;
+.game-item:hover {
+    transform: translateY(-10px);
+}
+
+.game-media img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+}
+
+.game-content {
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.game-content h3 {
+    font-size: 14px;
     color: white;
 }
 
-a {
-    text-decoration: none;
+.add-to-cart-btn {
+    background-color: var(--main-red);
+    color: white;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    border-radius: 5px;
+    margin-top: 10px;
 }
 
-#progress {
-    display: block;
+.add-to-cart-btn:hover {
+    background-color: #b30000;
 }
 
-#menu {
-    display: block;
+/* --- تحسين سلة المشتريات --- */
+.cart-section {
+    position: fixed; 
+    top: 0; 
+    left: -100%; 
+    width: 320px; 
+    height: 100%;
+    background-color: #111;
+    border-right: 2px solid var(--main-red);
+    transition: 0.4s;
+    z-index: 4000;
+    padding: 20px;
+    color: white;
 }
 
-#crypto {
-    display: none;
+.cart-section.open {
+    left: 0;
 }
 
-#tools {
-    display: none;
+.cart-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #333;
+    padding-bottom: 10px;
 }
 
-#lnx {
-    display: none;
+.generate-btn {
+    background: var(--gold);
+    color: #000;
+    width: 100%;
+    padding: 12px;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 5px;
 }
 
-#mods {
-    display: none;
+.whatsapp-btn {
+    background: #25d366;
+    color: white;
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    font-weight: bold;
+    border-radius: 5px;
 }
 
-.btn {
-  background: linear-gradient(135deg, #ff0000, #cc0000); /* تدرج أحمر */
-  color: white;
-  width: 227px;
-  height: 48px;
-  padding-bottom: 5px;
-  text-align: center;
-  font-size: 19px;
-  margin: 8px 5px;
-  border: none;
-  border-radius: 12px; /* زوايا ناعمة */
-  box-shadow: 0 0 12px rgba(255, 0, 0, 0.6); /* توهج أحمر */
-  font-family: 'Courier New', monospace; /* خط هاكر */
-  transition: all 0.3s ease;
-  cursor: pointer;
-  letter-spacing: 1px;
+/* شريط الكاش (لو احتاجته في الرئيسية) */
+#cache-progress-container {
+    background: #000; color: var(--gold); text-align: center;
+    padding: 5px 0; font-size: 12px; border-bottom: 1px solid var(--main-red);
 }
-
-.btn:hover {
-  background: linear-gradient(135deg, #ff4d4d, #b30000); /* لون عند الهوفر */
-  box-shadow: 0 0 20px rgba(255, 0, 0, 0.9); /* توهج أقوى */
-  transform: scale(1.05); /* تكبير بسيط */
-}
-
-.btn-alt {
-    background-color: #b10000;
-}
-
-.btn-alt:hover {
-    background-color: #f31414;
-}
-
-.btn-onln {
-    background-color: #076300;
-}
-
-.btn-onln:hover {
-    background-color: #18891b;
-}
-
-.btn-toolbox {
-    background-color: #ae2301;
-}
-
-.btn-toolbox:hover {
-    background-color: #d42a01;
-}
-
-.btn-ps5 {
-    background-color: #3d3f4e;
-}
-
-.btn-ps5:hover {
-    background-color: #c2c2c2;
-    color: #303030;
-}
+.progress-bar-bg { background: #222; height: 4px; width: 100%; margin-top: 4px; }
+#progress-bar-fill { background: var(--main-red); height: 100%; width: 0%; transition: width 0.3s; }

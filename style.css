@@ -4,64 +4,73 @@
   --dark-bg: #0a0707;
   --text-white: #ffffff;
   --gold: #d4af37;
-  --ps-blue: #003791; /* لون بلايستيشن الرسمي */
+  --ps-blue: #003791;
   --btn-bg: rgba(20, 20, 20, 0.8);
 }
 
 body {
   margin: 0; padding: 0;
   background: radial-gradient(circle at top, #4b0000 0%, #0a0707 80%) no-repeat fixed;
-  color: var(--text-white); direction: rtl;
+  color: var(--text-white); 
+  direction: rtl;
   font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
   overflow-x: hidden;
+  /* توسيط النصوص الأساسية في الصفحة */
+  text-align: center; 
 }
 
-/* --- تنسيق حاوية الأزرار الرئيسية --- */
+/* العنوان العلوي */
+#msgs {
+  display: block;
+  margin: 20px auto;
+  text-align: center;
+}
+
+/* --- تنسيق حاوية الأزرار لتكون في الوسط وبجانب بعضها --- */
 #menu {
-    max-width: 1000px;
+    max-width: 1100px;
     margin: 30px auto;
     padding: 20px;
-    display: grid;
-    /* جعل الأزرار تترتب تلقائياً بشكل شبكة متساوية */
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); 
-    gap: 15px;
-    justify-content: center;
+    display: flex; /* تحويلها لـ flex لجعل الأزرار بجانب بعضها */
+    flex-wrap: wrap; /* السماح بالنزول لسطر جديد عند ضيق الشاشة */
+    justify-content: center; /* توسيط الأزرار أفقياً */
+    align-items: center;
+    gap: 15px; /* المسافة بين الأزرار */
 }
 
-/* تحسين شكل العناوين داخل المنيو */
+/* توسيط العناوين داخل المنيو */
 #menu h1, #menu h2 {
-    grid-column: 1 / -1; /* تجعل العنوان يأخذ العرض بالكامل فوق الأزرار */
-    margin-bottom: 10px;
+    width: 100%; /* تأخذ العرض بالكامل لتجبر الأزرار على البدء من سطر جديد */
+    text-align: center;
+    margin-bottom: 20px;
 }
 
-/* --- التصميم الجديد للأزرار (الزر العام) --- */
+/* --- تصميم الأزرار --- */
 .btn {
     background: var(--btn-bg);
     color: var(--text-white);
     border: 2px solid #333;
-    padding: 15px 10px;
+    padding: 12px 25px;
     border-radius: 12px;
     font-weight: bold;
     font-size: 15px;
     cursor: pointer;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     text-align: center;
-    width: 100%; /* لملء مساحة الجريد */
-    display: block;
+    min-width: 180px; /* عرض أدنى للزرار لتوحيد الشكل */
+    display: inline-block;
     box-shadow: 0 4px 6px rgba(0,0,0,0.5);
-    border-bottom: 4px solid var(--main-red); /* تمييز أسفل الزر باللون الأحمر */
+    border-bottom: 4px solid var(--main-red);
 }
 
-/* تأثير عند تمرير الماوس */
 .btn:hover {
     background: var(--main-red);
-    color: white;
-    transform: translateY(-5px) scale(1.02);
+    transform: translateY(-5px);
     box-shadow: 0 10px 20px rgba(255, 0, 0, 0.4);
     border-color: white;
 }
 
-/* --- أزرار GoldHEN (لون ذهبي مميز) --- */
+/* أزرار GoldHEN */
 .btn.gold-btn, .btn[onmouseover*="GoldHEN"] {
     border-bottom-color: var(--gold);
 }
@@ -70,10 +79,9 @@ body {
     background: var(--gold);
     color: black;
     box-shadow: 0 10px 20px rgba(212, 175, 55, 0.4);
-    border-color: black;
 }
 
-/* --- زر PS5 (لون أزرق مميز) --- */
+/* زر PS5 */
 .btn-ps5 {
     border-bottom-color: var(--ps-blue) !important;
 }
@@ -83,30 +91,25 @@ body {
     box-shadow: 0 10px 20px rgba(0, 55, 145, 0.5) !important;
 }
 
-/* --- تحسين الهيدر --- */
-.store-header {
-    background: rgba(0, 0, 0, 0.95); 
-    padding: 0 15px;
-    display: flex; 
-    justify-content: space-between; 
-    align-items: center;
-    border-bottom: 2px solid var(--main-red); 
-    height: 70px;
-    position: sticky; top: 0; z-index: 2000;
+/* --- الفوتر والمعلومات السفلية وتوسيطها --- */
+.footer-info, h1, h2 {
+    text-align: center;
+    width: 100%;
+    margin: 25px auto;
 }
 
-/* --- الفوتر والمعلومات السفلية --- */
-.footer-info {
-    grid-column: 1 / -1;
-    margin-top: 30px;
-    padding: 20px;
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 15px;
+.footer-info a {
+    display: inline-block;
+    vertical-align: middle;
 }
 
 /* شريط الكاش */
 #cache-progress-container {
-    background: #000; color: var(--gold); text-align: center;
-    padding: 8px 0; font-size: 13px; border-bottom: 1px solid var(--main-red);
+    background: #000; 
+    color: var(--gold); 
+    text-align: center;
+    padding: 8px 0; 
+    font-size: 13px; 
+    border-bottom: 1px solid var(--main-red);
 }
 #progress-bar-fill { background: var(--main-red); height: 100%; width: 0%; transition: width 0.3s; }

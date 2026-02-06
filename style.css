@@ -4,13 +4,14 @@
   --dark-bg: #0a0707;
   --text-white: #ffffff;
   --gold: #d4af37;
+  --btn-bg: rgba(255, 0, 0, 0.1);
 }
 
 body {
   margin: 0; padding: 0;
   background: radial-gradient(circle at top, #4b0000 0%, #0a0707 80%) no-repeat fixed;
   color: var(--text-white); direction: rtl;
-  font-family: sans-serif;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   overflow-x: hidden;
 }
 
@@ -38,68 +39,76 @@ body {
     font-size: 14px;
 }
 
-.cart-trigger {
-    background-color: var(--main-red);
-    padding: 10px;
-    border-radius: 5px;
-    cursor: pointer;
+/* --- تنسيق أزرار الـ Exploit والـ Firmware (الحل للمشكلة) --- */
+.firmware-selection {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); /* ترتيب تلقائي */
+    gap: 12px;
+    padding: 20px;
+    max-width: 1000px;
+    margin: 20px auto;
+    direction: ltr; /* لضمان ترتيب الإصدارات من اليسار لليمين لو فضلت بالإنجليزية */
+}
+
+/* ستايل الزرار الموحد */
+.fw-btn {
+    background: var(--btn-bg);
     color: white;
+    border: 1px solid var(--main-red);
+    padding: 15px 10px;
+    border-radius: 8px;
     font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: center;
+    text-transform: uppercase;
+    font-size: 14px;
+}
+
+.fw-btn:hover {
+    background: var(--main-red);
+    box-shadow: 0 0 15px var(--main-red);
+    transform: translateY(-3px);
+}
+
+/* زرار الـ GoldHEN بلون مميز */
+.gold-btn {
+    border-color: var(--gold);
+    color: var(--gold);
+}
+
+.gold-btn:hover {
+    background: var(--gold);
+    color: black;
+    box-shadow: 0 0 15px var(--gold);
 }
 
 /* --- تحسين عرض الألعاب --- */
 .games {
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 15px;
     padding: 20px;
 }
 
-@media (max-width: 900px) {
-    .games {
-        grid-template-columns: repeat(3, 1fr);
-    }
-}
-
-@media (max-width: 600px) {
-    .games {
-        grid-template-columns: 1fr;
-    }
-}
-
-/* --- تحسين عرض كل لعبة --- */
 .game-item {
     background: rgba(255, 255, 255, 0.05);
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 10px;
     overflow: hidden;
     text-align: center;
-    height: 250px;
-    display: flex;
-    flex-direction: column;
     transition: transform 0.3s ease;
 }
 
 .game-item:hover {
     transform: translateY(-10px);
+    border-color: var(--main-red);
 }
 
 .game-media img {
     width: 100%;
-    height: 150px;
+    height: 180px;
     object-fit: cover;
-}
-
-.game-content {
-    padding: 10px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
-
-.game-content h3 {
-    font-size: 14px;
-    color: white;
 }
 
 .add-to-cart-btn {
@@ -110,11 +119,8 @@ body {
     cursor: pointer;
     font-weight: bold;
     border-radius: 5px;
-    margin-top: 10px;
-}
-
-.add-to-cart-btn:hover {
-    background-color: #b30000;
+    margin: 10px;
+    width: calc(100% - 20px);
 }
 
 /* --- تحسين سلة المشتريات --- */
@@ -129,45 +135,16 @@ body {
     transition: 0.4s;
     z-index: 4000;
     padding: 20px;
-    color: white;
 }
 
 .cart-section.open {
     left: 0;
 }
 
-.cart-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 1px solid #333;
-    padding-bottom: 10px;
-}
-
-.generate-btn {
-    background: var(--gold);
-    color: #000;
-    width: 100%;
-    padding: 12px;
-    font-weight: bold;
-    cursor: pointer;
-    border-radius: 5px;
-}
-
-.whatsapp-btn {
-    background: #25d366;
-    color: white;
-    width: 100%;
-    padding: 10px;
-    margin-top: 10px;
-    font-weight: bold;
-    border-radius: 5px;
-}
-
-/* شريط الكاش (لو احتاجته في الرئيسية) */
+/* شريط الكاش */
 #cache-progress-container {
     background: #000; color: var(--gold); text-align: center;
-    padding: 5px 0; font-size: 12px; border-bottom: 1px solid var(--main-red);
+    padding: 8px 0; font-size: 13px; border-bottom: 1px solid var(--main-red);
 }
-.progress-bar-bg { background: #222; height: 4px; width: 100%; margin-top: 4px; }
+.progress-bar-bg { background: #222; height: 6px; width: 100%; margin-top: 5px; }
 #progress-bar-fill { background: var(--main-red); height: 100%; width: 0%; transition: width 0.3s; }

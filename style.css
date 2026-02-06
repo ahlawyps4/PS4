@@ -4,15 +4,83 @@
   --dark-bg: #0a0707;
   --text-white: #ffffff;
   --gold: #d4af37;
-  --btn-bg: rgba(255, 0, 0, 0.1);
+  --ps-blue: #003791; /* لون بلايستيشن الرسمي */
+  --btn-bg: rgba(20, 20, 20, 0.8);
 }
 
 body {
   margin: 0; padding: 0;
   background: radial-gradient(circle at top, #4b0000 0%, #0a0707 80%) no-repeat fixed;
   color: var(--text-white); direction: rtl;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
   overflow-x: hidden;
+}
+
+/* --- تنسيق حاوية الأزرار الرئيسية --- */
+#menu {
+    max-width: 1000px;
+    margin: 30px auto;
+    padding: 20px;
+    display: grid;
+    /* جعل الأزرار تترتب تلقائياً بشكل شبكة متساوية */
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); 
+    gap: 15px;
+    justify-content: center;
+}
+
+/* تحسين شكل العناوين داخل المنيو */
+#menu h1, #menu h2 {
+    grid-column: 1 / -1; /* تجعل العنوان يأخذ العرض بالكامل فوق الأزرار */
+    margin-bottom: 10px;
+}
+
+/* --- التصميم الجديد للأزرار (الزر العام) --- */
+.btn {
+    background: var(--btn-bg);
+    color: var(--text-white);
+    border: 2px solid #333;
+    padding: 15px 10px;
+    border-radius: 12px;
+    font-weight: bold;
+    font-size: 15px;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    text-align: center;
+    width: 100%; /* لملء مساحة الجريد */
+    display: block;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.5);
+    border-bottom: 4px solid var(--main-red); /* تمييز أسفل الزر باللون الأحمر */
+}
+
+/* تأثير عند تمرير الماوس */
+.btn:hover {
+    background: var(--main-red);
+    color: white;
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 0 10px 20px rgba(255, 0, 0, 0.4);
+    border-color: white;
+}
+
+/* --- أزرار GoldHEN (لون ذهبي مميز) --- */
+.btn.gold-btn, .btn[onmouseover*="GoldHEN"] {
+    border-bottom-color: var(--gold);
+}
+
+.btn.gold-btn:hover, .btn[onmouseover*="GoldHEN"]:hover {
+    background: var(--gold);
+    color: black;
+    box-shadow: 0 10px 20px rgba(212, 175, 55, 0.4);
+    border-color: black;
+}
+
+/* --- زر PS5 (لون أزرق مميز) --- */
+.btn-ps5 {
+    border-bottom-color: var(--ps-blue) !important;
+}
+
+.btn-ps5:hover {
+    background: var(--ps-blue) !important;
+    box-shadow: 0 10px 20px rgba(0, 55, 145, 0.5) !important;
 }
 
 /* --- تحسين الهيدر --- */
@@ -24,121 +92,16 @@ body {
     align-items: center;
     border-bottom: 2px solid var(--main-red); 
     height: 70px;
-    position: sticky; 
-    top: 0; 
-    z-index: 2000;
+    position: sticky; top: 0; z-index: 2000;
 }
 
-.header-search input {
-    width: 250px;
-    padding: 8px;
-    border-radius: 15px;
-    border: 1px solid #444;
-    background-color: #111;
-    color: white;
-    font-size: 14px;
-}
-
-/* --- تنسيق أزرار الـ Exploit والـ Firmware (الحل للمشكلة) --- */
-.firmware-selection {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); /* ترتيب تلقائي */
-    gap: 12px;
+/* --- الفوتر والمعلومات السفلية --- */
+.footer-info {
+    grid-column: 1 / -1;
+    margin-top: 30px;
     padding: 20px;
-    max-width: 1000px;
-    margin: 20px auto;
-    direction: ltr; /* لضمان ترتيب الإصدارات من اليسار لليمين لو فضلت بالإنجليزية */
-}
-
-/* ستايل الزرار الموحد */
-.fw-btn {
-    background: var(--btn-bg);
-    color: white;
-    border: 1px solid var(--main-red);
-    padding: 15px 10px;
-    border-radius: 8px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    text-align: center;
-    text-transform: uppercase;
-    font-size: 14px;
-}
-
-.fw-btn:hover {
-    background: var(--main-red);
-    box-shadow: 0 0 15px var(--main-red);
-    transform: translateY(-3px);
-}
-
-/* زرار الـ GoldHEN بلون مميز */
-.gold-btn {
-    border-color: var(--gold);
-    color: var(--gold);
-}
-
-.gold-btn:hover {
-    background: var(--gold);
-    color: black;
-    box-shadow: 0 0 15px var(--gold);
-}
-
-/* --- تحسين عرض الألعاب --- */
-.games {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 15px;
-    padding: 20px;
-}
-
-.game-item {
     background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 10px;
-    overflow: hidden;
-    text-align: center;
-    transition: transform 0.3s ease;
-}
-
-.game-item:hover {
-    transform: translateY(-10px);
-    border-color: var(--main-red);
-}
-
-.game-media img {
-    width: 100%;
-    height: 180px;
-    object-fit: cover;
-}
-
-.add-to-cart-btn {
-    background-color: var(--main-red);
-    color: white;
-    padding: 10px;
-    border: none;
-    cursor: pointer;
-    font-weight: bold;
-    border-radius: 5px;
-    margin: 10px;
-    width: calc(100% - 20px);
-}
-
-/* --- تحسين سلة المشتريات --- */
-.cart-section {
-    position: fixed; 
-    top: 0; 
-    left: -100%; 
-    width: 320px; 
-    height: 100%;
-    background-color: #111;
-    border-right: 2px solid var(--main-red);
-    transition: 0.4s;
-    z-index: 4000;
-    padding: 20px;
-}
-
-.cart-section.open {
-    left: 0;
+    border-radius: 15px;
 }
 
 /* شريط الكاش */
@@ -146,5 +109,4 @@ body {
     background: #000; color: var(--gold); text-align: center;
     padding: 8px 0; font-size: 13px; border-bottom: 1px solid var(--main-red);
 }
-.progress-bar-bg { background: #222; height: 6px; width: 100%; margin-top: 5px; }
 #progress-bar-fill { background: var(--main-red); height: 100%; width: 0%; transition: width 0.3s; }

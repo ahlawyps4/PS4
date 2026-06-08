@@ -1,86 +1,102 @@
-/* ============ AHLAWY STORE FINAL RECOVERY - v13.0 ============ */
-:root {
-  --main-red: #ff0000;
-  --dark-bg: #0a0707;
-  --text-white: #ffffff;
-  --gold: #d4af37;
-  --ps-blue: #003791;
-  --btn-bg: rgba(20, 20, 20, 0.8);
+html {
+    background-image: url('img.jpg');
+    background-position: center;
+    background-size: cover;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-color: #24272b;
+    color: white;
+    text-align: center;
+    overflow: hidden;
 }
 
-body {
-  margin: 0; padding: 0;
-  background: radial-gradient(circle at top, #4b0000 0%, #0a0707 80%) no-repeat fixed;
-  color: var(--text-white); 
-  direction: rtl;
-  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-  overflow-x: hidden;
-  /* السطر ده بيخلي أي نص في الصفحة يبدأ من السنتر */
-  text-align: center; 
+h1 {
+    text-shadow: 0.1em 0.1em 0.2em black;
+    font-size: 25px;
+    color: white;
 }
 
-/* ضبط العنوان الرئيسي ليكون في السنتر تماماً */
-#msgs {
-  display: block;
-  width: 100%;
-  margin: 30px auto;
-  text-align: center;
-  font-size: 28px;
-  text-shadow: 0 0 15px rgba(255, 0, 0, 0.5);
+a {
+    text-decoration: none;
 }
 
-/* تنسيق حاوية الأزرار لتكون في الوسط وبجانب بعضها */
+#progress {
+    display: block;
+}
+
 #menu {
-    max-width: 1100px;
-    margin: 0 auto; /* توسيط الحاوية نفسها */
-    padding: 20px;
-    display: flex; 
-    flex-wrap: wrap; 
-    justify-content: center; /* توسيط الأزرار أفقياً داخل الحاوية */
-    align-items: center;
-    gap: 15px;
+    display: block;
 }
 
-/* توسيط العنوان الفرعي */
-.menu-title, #menu h1 {
-    width: 100%;
-    text-align: center;
-    color: yellow;
-    margin-bottom: 20px;
+#crypto {
+    display: none;
 }
 
-/* ستايل الزرار الموحد */
+#tools {
+    display: none;
+}
+
+#lnx {
+    display: none;
+}
+
+#mods {
+    display: none;
+}
+
 .btn {
-    background: var(--btn-bg);
-    color: var(--text-white);
-    border: 2px solid #333;
-    padding: 12px 25px;
-    border-radius: 12px;
-    font-weight: bold;
-    font-size: 15px;
-    cursor: pointer;
-    transition: 0.3s;
-    text-align: center;
-    min-width: 180px;
-    display: inline-block;
-    border-bottom: 4px solid var(--main-red);
+  background: linear-gradient(135deg, #ff0000, #cc0000); /* تدرج أحمر */
+  color: white;
+  width: 227px;
+  height: 48px;
+  padding-bottom: 5px;
+  text-align: center;
+  font-size: 19px;
+  margin: 8px 5px;
+  border: none;
+  border-radius: 12px; /* زوايا ناعمة */
+  box-shadow: 0 0 12px rgba(255, 0, 0, 0.6); /* توهج أحمر */
+  font-family: 'Courier New', monospace; /* خط هاكر */
+  transition: all 0.3s ease;
+  cursor: pointer;
+  letter-spacing: 1px;
 }
 
 .btn:hover {
-    background: var(--main-red);
-    transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(255, 0, 0, 0.4);
+  background: linear-gradient(135deg, #ff4d4d, #b30000); /* لون عند الهوفر */
+  box-shadow: 0 0 20px rgba(255, 0, 0, 0.9); /* توهج أقوى */
+  transform: scale(1.05); /* تكبير بسيط */
 }
 
-/* الفوتر (Designed by) وتوسيطه */
-.footer-info, h1, h2 {
-    text-align: center;
-    width: 100%;
-    margin: 25px auto;
+.btn-alt {
+    background-color: #b10000;
 }
 
-/* التأكد من أن الروابط تتبع التوسيط */
-a {
-    text-align: center;
-    text-decoration: none;
+.btn-alt:hover {
+    background-color: #f31414;
+}
+
+.btn-onln {
+    background-color: #076300;
+}
+
+.btn-onln:hover {
+    background-color: #18891b;
+}
+
+.btn-toolbox {
+    background-color: #ae2301;
+}
+
+.btn-toolbox:hover {
+    background-color: #d42a01;
+}
+
+.btn-ps5 {
+    background-color: #3d3f4e;
+}
+
+.btn-ps5:hover {
+    background-color: #c2c2c2;
+    color: #303030;
 }

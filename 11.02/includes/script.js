@@ -5,7 +5,7 @@ const jeilbrekBtn = document.getElementById('jeilbrek');
 const UAElement = document.getElementById("UA");
 
 const storedAutoJb = localStorage.getItem("autoJb");
-let autoJbValue = storedAutoJb !== null ? storedAutoJb === "true" : true;
+let autoJbValue = storedAutoJb !== null ? storedAutoJb === "true" : false;
 
 // choose one of kernel exploits
 var exploitChain = localStorage.getItem("exploitChain") || "lapse";

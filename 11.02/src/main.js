@@ -156,6 +156,13 @@ async function doJb() {
         } catch (e) {
           logger.error(`Kernel patches load failed: ${e.message}`);
         }
+      } else if (constants.KPATCH_SHELLCODE) {
+        try {
+          const shellcode = new Uint8Array(constants.KPATCH_SHELLCODE.match(/.{1,2}/g).map(b => parseInt(b, 16)));
+          kernel_patches(shellcode);
+        } catch (e) {
+          logger.error(`Kernel shellcode patch failed: ${e.message}`);
+        }
       }
 
       try {

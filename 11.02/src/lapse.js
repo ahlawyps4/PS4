@@ -623,6 +623,10 @@ async function double_free_reqs2() {
 }
 
 function leak_kaddrs() {
+  if (constants.EVF_OFFSET === 0) {
+    throw new Error("Lapse exploit is patched on this FW. Use NetControl instead.");
+  }
+
   logger.info("Leak evf started...");
 
   if (fn.close.invoke(rthdr_twins[1]) === -1) {

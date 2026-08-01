@@ -500,7 +500,7 @@ async function ucred_triple_free() {
         await Promise.all(iov_tasks);
 
         if (fn.read.invoke(iov_ss[0], tmp, 1).eq(-1)) {
-          throw new SyscallError(`Unable to write to fd ${iov_ss[0]} !!`);
+          throw new SyscallError(`Unable to read from fd ${iov_ss[0]} !!`);
         }
       }
 
@@ -537,7 +537,7 @@ async function ucred_triple_free() {
       await Promise.all(iov_tasks);
 
       if (fn.read.invoke(iov_ss[0], tmp, 1).eq(-1)) {
-        throw new SyscallError(`Unable to write to fd ${iov_ss[0]} !!`);
+        throw new SyscallError(`Unable to read from fd ${iov_ss[0]} !!`);
       }
 
       logger.info(`Found triplet: ${triplets} !!`);
@@ -800,7 +800,7 @@ async function kread_slow(addr, size) {
   await Promise.all(iov_tasks);
 
   if (fn.read.invoke(iov_ss[0], tmp, 1).eq(-1)) {
-    throw new SyscallError(`Unable to write to fd ${iov_ss[0]} !!`);
+    throw new SyscallError(`Unable to read from fd ${iov_ss[0]} !!`);
   }
 
   logger.debug(`Found triplet: ${triplets} !!`);
@@ -951,7 +951,7 @@ async function kwrite_slow(dst, src, size) {
   await Promise.all(iov_tasks);
 
   if (fn.read.invoke(iov_ss[0], tmp, 1).eq(-1)) {
-    throw new SyscallError(`Unable to write to fd ${iov_ss[0]} !!`);
+    throw new SyscallError(`Unable to read from fd ${iov_ss[0]} !!`);
   }
 
   logger.debug(`Found triplet: ${triplets} !!`);

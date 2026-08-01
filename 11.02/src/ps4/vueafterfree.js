@@ -126,7 +126,7 @@ async function init_vaf_rw() {
   };
 
   let structure_id = 0x80;
-  while (!(master instanceof Uint32Array)) {
+  while (!(master instanceof Uint32Array) && structure_id < 0x200) {
     const js_cell = new BInt(
       structure_id++,
       0x00 | (0x23 << 8) | (0xE0 << 16) | (0x01 << 24)

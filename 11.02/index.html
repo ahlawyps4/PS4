@@ -3,44 +3,61 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
   <title>PS4 Exploit (FW 1.01 - 13.00)</title>
   <link rel="stylesheet" href="includes/style.css">
 </head>
 <body>
 
-  <h1>PS4 Exploit</h1>
-  <h3 id="UA">Running on:</h3>
-  <p style="color:#ff9900; font-size:0.9em;">
-    FW 1.01 – 11.02: CSSFontFace UAF<br>
-    FW 11.50 – 13.00: VueAfterFree UAF (CVE-2017-7117)
-  </p>
+  <div class="header">
+    <h1>PS4 Exploit</h1>
+    <p id="UA" class="fw-info">Running on:</p>
+    <div class="fw-range">FW 1.01 – 13.00</div>
+  </div>
 
-  <hr>
+  <div class="divider"></div>
 
-  <div class="btn-container">
-    <form id="kernel-options">
-      <input type="radio" name="kernel" id="netctrl-exploit" value="netctrl">
-      <label for="netctrl-exploit">NetCtrl</label>
-      <input type="radio" name="kernel" id="lapse-exploit" value="lapse">
-      <label for="lapse-exploit">Lapse</label>
+  <div class="kernel-section">
+    <span class="section-label">Kernel Exploit</span>
+    <form id="kernel-options" class="kernel-options">
+      <label>
+        <input type="radio" name="kernel" id="netctrl-exploit" value="netctrl">
+        NetCtrl
+      </label>
+      <label>
+        <input type="radio" name="kernel" id="lapse-exploit" value="lapse">
+        Lapse
+      </label>
     </form>
-    <button id="jeilbrek">Jeilbrek</button>
-    <div class="autoJb">
-      <label for="autoJbInput" id="autoJbLabel">Auto Jailbreak</label>
-      <input class="mt-2" id="autoJbInput" type="checkbox">
+  </div>
+
+  <div class="btn-section">
+    <button id="jeilbrek">JEILBREK</button>
+    <div class="auto-jb">
+      <label class="toggle-switch">
+        <input type="checkbox" id="autoJbInput">
+        <span class="toggle-slider"></span>
+      </label>
+      <label for="autoJbInput" id="autoJbLabel" class="toggle-label">Auto Jailbreak</label>
     </div>
   </div>
 
-  <div class="main-layout">
+  <div class="main-content">
     <div class="media-box">
       <img src="includes/cat.jpg" alt="A cat staring at you">
     </div>
+    <div class="console-wrapper">
+      <div class="console-label">
+        <span class="dot"></span>
+        <span>Console</span>
+      </div>
+      <pre id="console">Ready. Awaiting execution...
+</pre>
+    </div>
+  </div>
 
-    <pre id="console">Ready. Awaiting execution...
-  </pre>
-
-
+  <div class="footer">
+    <a href="https://www.facebook.com/profile.php?id=61562998574429">@AHLAWY-PS4</a>
+    <p class="contact">01018251103</p>
   </div>
 
   <script src="src/main.js"></script>
@@ -51,5 +68,4 @@
     }
   </script>
 </body>
-
 </html>

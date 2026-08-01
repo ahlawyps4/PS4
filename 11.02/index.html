@@ -3,9 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-  <meta http-equiv="Pragma" content="no-cache">
-  <meta http-equiv="Expires" content="0">
+
   <title>PS4 Exploit (FW 1.01 - 13.00)</title>
   <link rel="stylesheet" href="includes/style.css">
 </head>
@@ -47,6 +45,11 @@
 
   <script src="src/main.js"></script>
   <script src="includes/script.js"></script>
+  <script>
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.register("sw.js").catch(() => {});
+    }
+  </script>
 </body>
 
 </html>

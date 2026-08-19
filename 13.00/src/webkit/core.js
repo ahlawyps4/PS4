@@ -4,10 +4,10 @@
 
 import { int64 } from './int64.js';
 
-// PS4 FW 13.00 specific constants - Tuned for stability
-const DRAIN_COUNT = 768;           // Increased for better heap control
-const AUTO_RETRY_DELAY_MS = 30;    // Faster retries
-const MAX_CORE_RETRIES = 12;       // More retry attempts
+// PS4 FW 13.00 specific constants - Tuned for maximum stability on console RAM
+const DRAIN_COUNT = 512;           // Balanced for reliable PS4 heap grooming
+const AUTO_RETRY_DELAY_MS = 50;    // Stable retry delay
+const MAX_CORE_RETRIES = 15;       // More retry attempts
 
 const K = 2;
 const DUPLICATE_INDEX = 2;
@@ -23,11 +23,11 @@ const FUNCTION_BYTES = 0x20;
 const NATIVE_EXECUTABLE_BYTES = 0x38;
 const HOLDER_BYTES = 0x40;
 
-// PS4 FW 13.00 carrier configuration - Tuned for success
-const CARRIER_SLOTS = 9000000;
+// PS4 FW 13.00 carrier configuration - Tuned for safe memory limits (prevents Out of Memory crash)
+const CARRIER_SLOTS = 4500000;     // Reduced from 9M to 4.5M slots (36MB) to ensure system stability
 const CARRIER_BYTES = CARRIER_SLOTS * 8;
-const CAPTURE_DELAY_MS = 80;       // More time for capture
-const COMPOSE_DELAY_MS = 150;      // More time for composition
+const CAPTURE_DELAY_MS = 100;      // Adequate time for garbage collection and memory capture
+const COMPOSE_DELAY_MS = 200;      // Safe interval for composition
 
 // PS4 heap layout constants - Tuned for FW 13.00
 const DRAIN_SIZE = 0x10000;

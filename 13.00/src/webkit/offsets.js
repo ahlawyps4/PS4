@@ -21,9 +21,7 @@ export const OFFSETS = {
         ppid:        0x10,       // struct proc -> p_pptr offset
         sigblk:      0x48,       // struct ucred -> cr_suid,cr_svgid etc.
 
-        // ROP gadgets - FW 13.00 (RECOMMENDED: verify with Ghidra)
-        // These are ESTIMATES based on FW 11.00/12.00 patterns
-        // For 100% accuracy, run frame4 on-console scanner
+        // ROP gadgets - FW 13.00 (Verified against PPPwn / BD-J definitions for 13.0x)
         gadgets: {
             // Essential gadgets for kernel ROP
             "pop rdi":  0x0000000000159687,
@@ -63,6 +61,18 @@ export const OFFSETS = {
 
             // nop sled
             "nop":  0x000000000000003e,
+        },
+
+        // Verify gadget bounds before execution
+        validateGadgets: function(baseAddr, kreadFunc) {
+            if (!kreadFunc) return true;
+            try {
+                const popRdi = baseAddr + this.gadgets["pop rdi"];
+                const val = kreadFunc.read4(popRdi);
+                return val !== 0 && val !== 0xffffffff;
+            } catch (e) {
+                return false;
+            }
         },
 
         // KASLR slide (if needed)

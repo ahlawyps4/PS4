@@ -1,4 +1,4 @@
-﻿// ?v=10 must match mem.js's specifier EXACTLY or core.js builds a second
+// ?v=10 must match mem.js's specifier EXACTLY or core.js builds a second
 // module record and releaseFakeCell() (only call site: mem.js:662) reaches a
 // virgin instance, pinning ~137 MB for the life of the page.
 import { establishPrimitive } from "./core.js?v=10";
@@ -16,7 +16,7 @@ const STOP_BEFORE_DOUBLE = params.get("stop") === "beforedouble";
 function post(tag, detail) {
     try {
         const x = new XMLHttpRequest();
-        x.open("POST", "t", true);
+        x.open("POST", "/t", true);
         x.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
         x.send("PS4-S10&tag=" + encodeURIComponent(tag)
              + "&detail=" + encodeURIComponent(String(detail == null ? "" : detail)));
@@ -114,7 +114,6 @@ let committed = false, rebootRequired = false;
 
 let kreadPoisoned = false;
 let uafSock = 0;
-let uafFpSaved = null;
 
 let savedMask = null, savedPrio = null, restoreCtx = null, attrsRestored = false;
 
@@ -139,10 +138,7 @@ let allDone = false;
             + " mode=" + (STOP_BEFORE_DOUBLE ? "stop-before-double" : "armed"));
 
         let kpatch = null, payload = null;
-        // off.kpatch wins when a firmware shares another's kernel and therefore
-        // its blob -- 12.02 uses 1200.bin. Otherwise derive it from the key.
-        const kpatchName = off && off.kpatch ? "patches/" + off.kpatch
-            : key ? "patches/" + key.replace(".", "") + ".bin" : null;
+        const kpatchName = key ? "patches/" + key.replace(".", "") + ".bin" : null;
         const KPATCH_JMP_SITES = [];
         try {
             if (kpatchName) {
@@ -172,7 +168,7 @@ let allDone = false;
               + (payload[0] === 0xe9 ? "e9-jmp-rel32" : "NOT-e9")
             : "MISSING");
 
-        state("running the primitive...", "warn");
+        state("Please wait... أنتظر رجاءاً ", "warn");
         await new Promise(r => setTimeout(r, 0));
 
         const PRIMITIVE_LOUD = /FAIL|ERROR|THREW|RETRY|ABORT|PASS/i;
@@ -553,7 +549,7 @@ let allDone = false;
         const NUM_UIO_WORKER = params.has("uio")
             ? parseInt(params.get("uio"), 10) : 4;
         const TOTAL_WORKERS = NUM_IOV_WORKER + NUM_UIO_WORKER;
-        state("bringing up " + TOTAL_WORKERS + " workers...", "warn");
+        state("لحظة من فضلك One moment, please  " + TOTAL_WORKERS + " .", "warn");
         for (let i = 0; i < TOTAL_WORKERS; ++i) {
             const name = (i < NUM_IOV_WORKER ? "iov" : "uio")
                 + (i < NUM_IOV_WORKER ? i : i - NUM_IOV_WORKER);
@@ -1391,7 +1387,7 @@ let allDone = false;
 
         let kv = null;
         if (kernelBase && triplets && kqFdp) {
-            state("make_karw...", "warn");
+            state("Editing in progressجارِ التعديل ", "warn");
             mark("SHORT-READS", "n=" + shortReads + " gate=" + (R2_ON ? 1 : 0));
 
             const KREAD_TRIES = params.has("kreadtries")
@@ -1588,16 +1584,6 @@ let allDone = false;
 
                     const kvwAb = new ArrayBuffer(0x10); keepAlive.push(kvwAb);
                     const kvwAddr = bufAddr(kvwAb), kvwDv = new DataView(kvwAb);
-                    // dump scratch: kvwAb is only 0x10, and the pipebuf read
-                    // needs 0x18. Separate buffers so the dump can never
-                    // overflow the one the kview accessors use.
-                    const dmpAb = new ArrayBuffer(0x20); keepAlive.push(dmpAb);
-                    const dmpAddr = bufAddr(dmpAb), dmpDv = new DataView(dmpAb);
-                    const dmpU8 = new Uint8Array(dmpAb);
-                    const scanAbDump = new ArrayBuffer(0x80 * FILEDESCENT_SIZE);
-                    keepAlive.push(scanAbDump);
-                    const scanAddrDump = bufAddr(scanAbDump);
-                    const scanDvDump = new DataView(scanAbDump);
                     function kview(base) {
                         return {
                             getBInt: function (o) {
@@ -1757,9 +1743,6 @@ let allDone = false;
                     }
 
 
-                    // Addresses captured during the repair so the end-of-run
-                    // dump can re-read them once the sockets are closed.
-                    const dumpOpts = [];
                     function removeRthdrFromSocket(fd) {
                         const fp = fget(fd);
                         if (!kptr2(fp)) return "badfp";
@@ -1768,7 +1751,6 @@ let allDone = false;
                         const soPcb = kv.read8(fData.add32(0x18));
                         if (!kptr2(soPcb)) return "badpcb";
                         const opts = kv.read8(soPcb.add32(0x118));
-                        if (kptr2(opts)) dumpOpts.push({ fd: fd, opts: opts });
                         if (!kptr2(opts)) return "noopts";
                         // ITEM 4. Read it, write it, READ IT BACK. This is the
                         // single write that decides whether the process can exit
@@ -1823,9 +1805,8 @@ let allDone = false;
                         if (burned.size) rebootRequired = true;
                     }
 
-                    state("remove_uaf_file...", "warn");
+                    state("المرحلة الأخيرة Final stage", "warn");
                     const uafFp = fget(uafSock);
-                    uafFpSaved = uafFp;
                     mark("UAF-FP", "fd=" + uafSock + " fp=" + uafFp);
                     if (kptr2(uafFp)) {
 
@@ -2303,122 +2284,6 @@ let allDone = false;
                         }
                     }
 
-                    // ================== END-OF-RUN STATE DUMP ==================
-                    // READ ONLY. Not a fix -- a measurement. Everything above has
-                    // finished, so this reports what we ACTUALLY leave behind
-                    // rather than what the source implies we leave behind. Three
-                    // confident inferences from reading code have already been
-                    // wrong; this replaces the fourth with data.
-                    // ?dump=0 to skip.
-                    if (params.get("dump") !== "0") {
-                        try {
-                            const kq = v => v && (v.hi >>> 0) >= 0xffff0000;
-                            const rd8 = a => kq(a) ? kv.read8(a) : null;
-                            const rd32 = function (a) {
-                                if (!kq(a)) return null;
-                                dmpU8.fill(0);
-                                if (kv.kread(dmpAddr, a, 4) !== 4) return null;
-                                return dmpDv.getInt32(0, true);
-                            };
-
-                            // --- the 4 karw pipe files, and the forged pipebuf ---
-                            // fd 15 reads f_count 2 BEFORE we touch it on every
-                            // run while its siblings read 1. Nobody has explained
-                            // that. This prints the final state of all four.
-                            const pf = [];
-                            for (const fd of [masterPipe[0], masterPipe[1],
-                                              slavePipe[0], slavePipe[1]]) {
-                                const fp = fget(fd);
-                                pf.push(fd + ":" + (kq(fp) ? "fc=" + rd32(fp.add32(0x28))
-                                                           : "nofp"));
-                            }
-                            mark("DUMP-PIPE-FCOUNT", pf.join(" "));
-
-                            for (const [nm, fd] of [["master", masterPipe[0]],
-                                                    ["slave", slavePipe[0]]]) {
-                                const fp = fget(fd);
-                                const fdata = rd8(fp);
-                                if (!kq(fdata)) { mark("DUMP-PIPEBUF", nm + " nofdata"); continue; }
-                                dmpU8.fill(0);
-                                const okr = kv.kread(dmpAddr, fdata, 0x18) === 0x18;
-                                mark("DUMP-PIPEBUF", nm + " @" + fdata
-                                    + (okr ? "  cnt=" + dmpDv.getUint32(0, true)
-                                        + " in=" + dmpDv.getUint32(4, true)
-                                        + " out=" + dmpDv.getUint32(8, true)
-                                        + " size=0x" + dmpDv.getUint32(0xc, true).toString(16)
-                                        + " buffer=" + new int64(dmpDv.getUint32(0x10, true),
-                                                                 dmpDv.getUint32(0x14, true))
-                                        : "  READ-FAILED"));
-                            }
-
-                            // --- the triplets' outputopts, re-read after close ---
-                            // Confirms the repair actually persisted rather than
-                            // being undone by the socket teardown.
-                            const to = [];
-                            for (const e of dumpOpts) {
-                                const r = rd8(e.opts.add32(0x68));
-                                const pi = rd8(e.opts.add32(0x10));
-                                to.push("fd" + e.fd + "@" + e.opts
-                                    + " rthdr=" + (r || "?")
-                                    + " pktinfo=" + (pi || "?"));
-                            }
-                            mark("DUMP-TRIPLET-OPTS", to.length ? to.join("  ") : "none");
-
-                            // --- the triple-freed struct file ---
-                            const uf = (typeof uafFpSaved !== "undefined") ? uafFpSaved : null;
-                            if (kq(uf)) {
-                                mark("DUMP-UAF-FILE", "fp=" + uf
-                                    + " f_count=" + rd32(uf.add32(0x28))
-                                    + " f_data=" + (rd8(uf) || "?"));
-                            }
-
-                            // --- ANY fd-table slot still pointing at it ---
-                            if (kq(uf) && kq(fdtOfiles)) {
-                                let hits = 0, lastFd = -1;
-                                const wl = uf.low >>> 0, wh = uf.hi >>> 0;
-                                const nfd = Math.min(0x400, (typeof SCAN_MAX !== "undefined")
-                                    ? SCAN_MAX + 0x40 : 0x400);
-                                for (let base = 0; base < nfd; base += 0x80) {
-                                    const n = Math.min(0x80, nfd - base);
-                                    if (kv.kread(scanAddrDump,
-                                        fdtOfiles.add32(base * FILEDESCENT_SIZE),
-                                        n * FILEDESCENT_SIZE) !== n * FILEDESCENT_SIZE) break;
-                                    for (let i = 0; i < n; ++i) {
-                                        const o = i * FILEDESCENT_SIZE;
-                                        if (scanDvDump.getUint32(o, true) === wl
-                                            && scanDvDump.getUint32(o + 4, true) === wh) {
-                                            hits++; lastFd = base + i;
-                                        }
-                                    }
-                                }
-                                mark("DUMP-UAF-REFS", "slots_still_pointing_at_it=" + hits
-                                    + (hits ? " last_fd=" + lastFd : "")
-                                    + "  scanned=" + nfd);
-                            }
-
-                            // --- our own process ---
-                            if (kq(curproc)) {
-                                const uc = rd8(curproc.add32(0x40));
-                                const pfd = rd8(curproc.add32(0x48));
-                                mark("DUMP-PROC", "curproc=" + curproc
-                                    + " ucred=" + (uc || "?")
-                                    + (kq(uc) ? " cr_ref=" + rd32(uc.add32(0x00))
-                                        + " uid=" + rd32(uc.add32(0x04))
-                                        + " prison=" + (rd8(uc.add32(0x30)) || "?") : "")
-                                    + " p_fd=" + (pfd || "?"));
-                                if (kq(pfd))
-                                    mark("DUMP-FILEDESC", "fd_cdir=" + (rd8(pfd.add32(0x10)) || "?")
-                                        + " fd_rdir=" + (rd8(pfd.add32(0x18)) || "?")
-                                        + " fd_jdir=" + (rd8(pfd.add32(0x20)) || "?"));
-                            }
-
-                            mark("DUMP-DONE", "read-only, no kernel writes");
-                        } catch (e) {
-                            mark("DUMP-THREW", (e && e.message) ? e.message : String(e));
-                        }
-                    }
-                    // ================ END END-OF-RUN STATE DUMP ================
-
                     mark("STEP10-CHAIN", "kv=up jailbroken=" + jailbroken
                         + " kpatched=" + kpatched + " payload=" + payloadRunning
                         + " cleanup=" + (rebootRequired ? "incomplete" : "complete"));
@@ -2443,11 +2308,11 @@ let allDone = false;
                 + " reached=" + (triplets ? "triplets" : committed ? "commit" : "none"));
         }
 
-        state(allDone ? "ALL DONE"
+        state(allDone ? "تم تهكير الجهاز بنجاح "
               : kv ? "KERNEL R/W -- REBOOT NEEDED"
               : kernelBase ? "FAILED IN make_karw -- REBOOT"
               : triplets ? "FAILED IN leak_kqueue (triple free was OK) -- REBOOT"
-              : committed ? "FAILED IN triple free -- REBOOT"
+              : committed ? "FAILED PLEASE REBOOT PS4 فشل في تهكير الجهاز يرجى إعادة تشغيل الجهاز "
               : "no commit", allDone ? "ok" : kv ? "warn" : "bad");
     } catch (e) {
         mark("STEP10-FAILED", (e && e.message) ? e.message : String(e));
@@ -2479,10 +2344,8 @@ let allDone = false;
                 mark("EXPM1-RESTORED", "expm1(1)=" + Math.expm1(1));
             }
         } catch (e) { mark("DISARM-THREW", e.message); }
-
         if (rebootRequired)
             mark("REBOOT-REQUIRED", "reason=uaf-file-not-reclaimed");
         mark("PROOF-SUMMARY-FINAL", "pass=" + passCount + " fail=" + failCount);
     }
 })();
-

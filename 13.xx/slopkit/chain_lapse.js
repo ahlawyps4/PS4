@@ -277,7 +277,10 @@ function makeRpc(worker) {
 
         let payload = null;
         try {
-            const prsp = await fetch("goldhen_2.4b18.10.bin");
+            const fwKey = key ? parseFloat(key) : 0;
+            const payloadFile = fwKey >= 13.02 ? "hen.bin" : "goldhen_2.4b18.10.bin";
+            mark("PAYLOAD-SELECT", "fw=" + fwKey + " file=" + payloadFile);
+            const prsp = await fetch(payloadFile);
             if (prsp.ok) payload = new Uint8Array(await prsp.arrayBuffer());
         } catch (e) {
             mark("PAYLOAD-FETCH-FAILED", (e && e.message) ? e.message : String(e));

@@ -210,7 +210,10 @@ let payloadRunning = false;
               + " sites=" + KPATCH_JMP_SITES.length
             : "blob=" + kpatchName + " MISSING");
         try {
-            const r = await fetch("goldhen_2.4b18.10.bin");
+            const fwKey = key ? parseFloat(key) : 0;
+            const payloadFile = fwKey >= 13.02 ? "hen.bin" : "goldhen_2.4b18.10.bin";
+            mark("PAYLOAD-SELECT", "fw=" + fwKey + " file=" + payloadFile);
+            const r = await fetch(payloadFile);
             if (r.ok) payload = new Uint8Array(await r.arrayBuffer());
         } catch (e) { mark("PAYLOAD-FETCH-THREW", e.message); }
         mark("PAYLOAD-BLOB", payload

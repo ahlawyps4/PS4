@@ -349,7 +349,7 @@ export const PS4 = {
         wk_ArrayBuffer_m_contents_m_data:   0x10,
 
         wk___imp___error:                   0x3cb8cc8,
-        k__error:                           0x26420,
+        k__error:                           0x2a0f0,
         wk___imp_pthread_create:            0x3cb9c00,
         k_pthread_create:                   0x10110,
 

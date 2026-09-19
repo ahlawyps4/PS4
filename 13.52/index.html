@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>PS4 [5.05] 7.00 - 13.52 FW Host by Ahlawy-Store</title>
+<link rel="stylesheet" href="../style.css">
+<style>
+  #jailbreakBtn {
+    margin-top: 20px;
+    padding: 16px 40px;
+    font-size: 20px;
+    font-weight: 800;
+    background: linear-gradient(180deg, #ffd86b 0%, #d4af37 55%, #b8860b 100%);
+    color: #1a1a1a;
+    border: 1px solid rgba(255, 215, 0, 0.55);
+    border-radius: 10px;
+    cursor: pointer;
+    box-shadow: 0 10px 22px rgba(0,0,0,0.35);
+  }
+  #jailbreakBtn:disabled {
+    background: #555555;
+    color: #aaaaaa;
+    cursor: not-allowed;
+    box-shadow: none;
+  }
+  #autoStartChk {
+    transform: scale(1.5);
+    transform-origin: left center;
+    margin-left: 10px;
+  }
+  #out {
+    font-family: monospace;
+    background-color: #1e1e1e;
+    color: #cccccc;
+    border: 1px solid #3c3c3c;
+    padding: 12px;
+    border-radius: 6px;
+    margin-top: 20px;
+    text-align: left;
+    max-height: 400px;
+    overflow-y: auto;
+    white-space: pre-wrap;
+    display: none;
+  }
+  #out .bad { color: #ff4444; }
+  #out .warn { color: #f0c040; }
+  #out .ok { color: #4ec94e; }
+  #state {
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 15px;
+    color: #cccccc;
+    display: none;
+  }
+  #state.ok { color: #4ec94e; }
+  #state.warn { color: #f0c040; }
+  #state.bad { color: #ff4444; }
+</style>
+<script>
+  if (window.applicationCache && window.applicationCache.status === 0) {
+    if (navigator.userAgent.indexOf("PlayStation 4") !== -1) {
+      var m = navigator.userAgent.match(/PlayStation 4[ /]([\d.]+)/i);
+      if (m) {
+        var fw = parseFloat(m[1]);
+        if (fw >= 5.05 && fw <= 5.07) { window.location.replace("cache505.html"); }
+        else if (fw >= 7.00 && fw <= 8.52) { window.location.replace("cache700.html"); }
+        else if (fw >= 9.00 && fw <= 9.60) { window.location.replace("cache900.html"); }
+        else if (fw >= 10.00 && fw <= 11.02) { window.location.replace("cachecss.html"); }
+        else if (fw >= 11.50 && fw <= 13.52) { window.location.replace("cacheslopkit.html"); }
+      }
+    }
+  }
+</script>
+</head>
+<body>
+<h1>PS4 [5.05] 7.00 - 13.52 FW Host by Ahlawy-Store</h1>
+<hr>
+<br>
+<div>
+  <button id="jailbreakBtn">ابدأ الجيلبريك</button>
+  <label style="display:block; margin-top:12px; font-size:18px; color:#cccccc;">
+    <input type="checkbox" id="autoStartChk">
+    تشغيل تلقائي بعد فتح الصفحة
+  </label>
+</div>
+<div id="state"></div>
+<pre id="out"></pre>
+<h1 style="margin-top: 43px;">Special Thanks to:<a href="https://twitter.com/Ahlawy-Store" style="color: #f31414;margin-left: 10px;margin-right: 10px;">@Ahlawy-Store</a>ChendoChap<a href="https://x.com/Ahlawy-Store" style="color: #f31414;margin-left: 10px;margin-right: 10px;">@Ahlawy-Store</a>SiSTR0 Abc</h1>
+
+<script>
+var uaFull = navigator.userAgent;
+var match = uaFull.match(/PlayStation 4[ /]([\d.]+)/i);
+var isPS4 = match !== null;
+var fwVersion = isPS4 ? match[1] : "Unknown";
+var fwNum = parseFloat(fwVersion);
+
+var outEl = document.getElementById("out");
+var stateEl = document.getElementById("state");
+var jailbreakBtn = document.getElementById("jailbreakBtn");
+var autoStartChk = document.getElementById("autoStartChk");
+var AUTO_KEY = "autoStartEnabled";
+
+function log(msg, color) {
+  color = color || "#cccccc";
+  outEl.style.display = "block";
+  outEl.innerHTML += '<span style="color:' + color + '">' + msg + '</span><br>';
+  outEl.scrollTop = outEl.scrollHeight;
+}
+
+if (!isPS4) {
+  log("Only for PS4 with Firmware 5.05 and 7.00 to 13.52", "red");
+  jailbreakBtn.disabled = true;
+} else {
+  log("Firmware detected: " + fwVersion, "#4ec94e");
+
+  function startJailbreak() {
+    outEl.innerHTML = "";
+    outEl.style.display = "block";
+    stateEl.style.display = "block";
+    stateEl.textContent = "جاري تحميل الثغرة...";
+    stateEl.className = "warn";
+
+    if (fwNum == 5.05 || fwNum == 5.07) {
+      var script = document.createElement('script');
+      script.src = "505/exploit.js";
+      document.head.appendChild(script);
+    }
+    else if (fwNum >= 7.00 && fwNum <= 8.52) {
+      var script = document.createElement('script');
+      script.type = 'module';
+      script.src = "700/alert.js";
+      document.head.appendChild(script);
+    }
+    else if (fwNum >= 9.00 && fwNum <= 9.60) {
+      var script = document.createElement('script');
+      script.type = 'module';
+      script.src = "900/alert.js";
+      document.head.appendChild(script);
+    }
+    else if (fwNum >= 10.00 && fwNum <= 11.02) {
+      var script = document.createElement('script');
+      script.src = "css/main.js";
+      script.onload = function() {
+        setTimeout(function() { doJb(); }, 500);
+      };
+      document.head.appendChild(script);
+    }
+    else if (fwNum >= 11.50 && fwNum <= 12.02) {
+      log("Loading chain_lapse.js...", "#4ec94e");
+      var script = document.createElement('script');
+      script.type = 'module';
+      script.src = "slopkit/chain_lapse.js";
+      document.head.appendChild(script);
+    }
+    else if (fwNum >= 12.50 && fwNum <= 13.52) {
+      log("Loading chain_poops.js...", "#4ec94e");
+      var script = document.createElement('script');
+      script.type = 'module';
+      script.src = "slopkit/chain_poops.js";
+      document.head.appendChild(script);
+    }
+    else {
+      log("Unsupported Firmware: " + fwVersion, "red");
+      stateEl.textContent = " Firmware غير مدعوم";
+      stateEl.className = "bad";
+    }
+    jailbreakBtn.disabled = true;
+  }
+
+  jailbreakBtn.addEventListener("click", function() {
+    startJailbreak();
+  });
+
+  // Auto-start checkbox logic
+  autoStartChk.checked = localStorage.getItem(AUTO_KEY) === "1";
+  autoStartChk.addEventListener("change", function() {
+    localStorage.setItem(AUTO_KEY, autoStartChk.checked ? "1" : "0");
+  });
+
+  // Auto-start if checkbox is checked
+  if (localStorage.getItem(AUTO_KEY) === "1") {
+    setTimeout(function() { startJailbreak(); }, 500);
+  }
+}
+</script>
+</body>
+</html>
